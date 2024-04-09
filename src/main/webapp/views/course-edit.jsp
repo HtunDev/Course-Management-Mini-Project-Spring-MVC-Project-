@@ -26,7 +26,7 @@
 
 			<div class="col-6">
 
-				<c:url value="/course/" var="saveCourse"></c:url>
+				<c:url value="/course" var="saveCourse"></c:url>
 				<form method="post" action="${saveCourse}">
 
 					<div class="mb-3">
