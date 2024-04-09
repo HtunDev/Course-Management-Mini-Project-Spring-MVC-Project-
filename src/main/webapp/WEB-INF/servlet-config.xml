@@ -10,10 +10,10 @@
 
 	<!-- Component scan for controller packages -->
 	<context:component-scan
-		base-package="com.HAH.mapping.controller" />
+		base-package="com.HAH.mapping.controller" /> 
 
 	<!-- Enable MVC -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven enable-matrix-variables="true" />
 
 	<!-- View resolver configuration -->
 	<bean id="viewResolver"

@@ -45,7 +45,10 @@
 					<c:forEach var="c" items="${lists}">
 						<tr>
 							<td>${c.id}</td>
-							<td>${c.name}</td>
+							<td>
+							<c:url value="/course/${c.id}" var="courseDetails"></c:url>
+							<a href="${courseDetails}">${c.name}</a>
+							</td>
 							<td>${c.level}</td>
 							<td>${c.duration}</td>
 							<td>${c.fees}</td>

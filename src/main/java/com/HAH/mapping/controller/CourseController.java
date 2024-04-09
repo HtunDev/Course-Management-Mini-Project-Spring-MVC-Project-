@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.HAH.mapping.model.dto.Course;
 import com.HAH.mapping.model.dto.Level;
+import com.HAH.mapping.model.dto.Result;
+import com.HAH.mapping.model.dto.Result.Status;
 import com.HAH.mapping.model.service.CourseService;
 
 @Controller
@@ -39,10 +42,12 @@ public class CourseController {
 			@RequestParam String name,
 			@RequestParam Level level,
 			@RequestParam int duration,
-			@RequestParam int fees
+			@RequestParam int fees,
+			RedirectAttributes redirect
 			) {
 		var course = new Course(name, duration, level, fees);
 		var id = courseService.create(course);
+		redirect.addFlashAttribute("result", new Result(Status.Success, "New Course Has Been Created!"));
 		return "redirect:course/%d".formatted(id);
 	}
 	
