@@ -32,27 +32,27 @@
 				
 					<div class="mb-3">
 						<label class="form-label mb-1" for="id">Course Id</label> 
-						<input id="id" name="id" type="text" placeholder="Enter Course Id" disabled="disabled" readonly="readonly" class="form-control"  />
+						<input id="id" name="id" type="text" value="${course.id}" disabled="disabled" readonly="readonly" class="form-control"  />
 					</div>
 
 					<div class="mb-3">
 						<label class="form-label mb-1" for="name">Course Name</label> 
-						<input id="name" name="name" type="text" placeholder="Enter Course Name"  disabled="disabled" readonly="readonly" class="form-control" />
+						<input id="name" name="name" type="text" value="${course.name}"  disabled="disabled" readonly="readonly" class="form-control" />
 					</div>
 					
 					<div class="mb-3">
 						<label class="form-label mb-1" for="level">Course Level</label> 
-						<input id="level" name="level" type="text" placeholder="Enter Course Level" disabled="disabled" readonly="readonly" class="form-control"  />
+						<input id="level" name="level" type="text" value="${course.level}" disabled="disabled" readonly="readonly" class="form-control"  />
 					</div>
 					
 					<div class="mb-3">
 						<label class="form-label mb-1" for="duration">Course Duration</label> 
-							<input id="duration" name="duration" type="number" placeholder="Enter Course Duration" disabled="disabled" readonly="readonly" class="form-control" min="1"  />
+							<input id="duration" name="duration" type="number" value="${course.duration}" disabled="disabled" readonly="readonly" class="form-control" min="1"  />
 					</div>
 					
 					<div class="mb-3">
 						<label class="form-label mb-1" for="fees">Course Fees</label> 
-						<input id="fees" name="fees" type="number" placeholder="Enter Course Fees" disabled="disabled" readonly="readonly" class="form-control" min="10000"  />
+						<input id="fees" name="fees" type="number" value="${course.fees}" disabled="disabled" readonly="readonly" class="form-control" min="10000"  />
 					</div>
 
 				</form>

@@ -4,11 +4,15 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.HAH.mapping.model.dto.Course;
+import com.HAH.mapping.model.dto.Level;
 import com.HAH.mapping.model.service.CourseService;
 
 @Controller
@@ -30,7 +34,16 @@ public class CourseController {
 	}
 	
 	@PostMapping
-	public String saveCourse() {
+	public String saveCourse(
+			@RequestParam String name,
+			@RequestParam Level level,
+			@RequestParam int duration,
+			@RequestParam int fees,
+			ModelMap model
+			) {
+		var course = new Course(name, duration, level, fees);
+		var id = courseService.create(course);
+		model.put("course", courseService.findById(id));
 		return "course-details";
 	}
 
