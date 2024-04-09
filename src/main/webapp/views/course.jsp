@@ -25,6 +25,11 @@
 
 		<div class="mt-4">
 
+			<div>
+				<c:url value="/course/edit" var="courseEdit"></c:url>
+				<a href="${courseEdit}" class="btn btn-primary">Add New Course</a>
+			</div>
+
 			<table class="table">
 				<thead>
 					<tr>
