@@ -1,8 +1,7 @@
 package com.HAH.mapping.model.dto;
 
-import lombok.Data;
+import java.util.Objects;
 
-@Data
 public class Result {
 
 	private Status status;
@@ -20,6 +19,39 @@ public class Result {
 		super();
 		this.status = status;
 		this.message = message;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(message, status);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Result other = (Result) obj;
+		return Objects.equals(message, other.message) && status == other.status;
 	}
 
 }

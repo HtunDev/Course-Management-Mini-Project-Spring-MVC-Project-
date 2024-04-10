@@ -1,25 +1,63 @@
 package com.HAH.mapping.model.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Service;
 
 import com.HAH.mapping.model.dto.Course;
+import com.HAH.mapping.model.dto.Level;
 
 @Service
 public class CourseService {
 
+	private final SimpleJdbcInsert simpleJdbcInsert;
+
+	@Autowired
+	public CourseService(SimpleJdbcInsert simpleJdbcInsert) {
+		this.simpleJdbcInsert = simpleJdbcInsert;
+	}
+
 	public int create(Course c) {
-		return 0;
+		Map<String, Object> params = new HashMap<>();
+		params.put("name", c.getName());
+		params.put("level", c.getLevel().name());
+		params.put("duration", c.getDuration());
+		params.put("fees", c.getFees());
+		params.put("description", c.getDescription());
+
+		return simpleJdbcInsert.executeAndReturnKeyHolder(params).getKey().intValue();
 	}
 
 	public Course findById(int id) {
-		return null;
+		return simpleJdbcInsert.getJdbcTemplate().queryForObject("SELECT * FROM course WHERE id = ?", (rs, rowNum) -> {
+			Course course = new Course();
+			course.setId(rs.getInt("id"));
+			course.setName(rs.getString("name"));
+			course.setLevel(Level.valueOf(rs.getString("level")));
+			course.setDuration(rs.getInt("duration"));
+			course.setFees(rs.getInt("fees"));
+			course.setDescription(rs.getString("description"));
+			return course;
+		}, id);
 	}
 
 	public List<Course> getAll() {
-		return null;
+		return simpleJdbcInsert.getJdbcTemplate().query("SELECT * FROM course", (rs, rowNum) -> {
+			Course course = new Course();
+			course.setId(rs.getInt("id"));
+			course.setName(rs.getString("name"));
+			course.setLevel(Level.valueOf(rs.getString("level")));
+			course.setDuration(rs.getInt("duration"));
+			course.setFees(rs.getInt("fees"));
+			course.setDescription(rs.getString("description"));
+			return course;
+		});
 	}
+}
 
 //	This is manual
 //	private List<Course> coursesRepo;
@@ -54,4 +92,3 @@ public class CourseService {
 //	public List<Course> getAll() {
 //		return List.copyOf(coursesRepo);
 //	}
-}

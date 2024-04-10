@@ -59,6 +59,11 @@
 						<label class="form-label mb-1" for="fees">Course Fees</label> 
 						<input id="fees" name="fees" type="number" value="${course.fees}" disabled="disabled" readonly="readonly" class="form-control" min="10000"  />
 					</div>
+					
+					<div class="mb-3">
+						<label class="form-label mb-1" for="description">Course Description</label> 
+						<input id="description" name="description" type="text" value="${course.description}" disabled="disabled" readonly="readonly" class="form-control" />
+					</div>
 
 				</form>
 

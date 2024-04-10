@@ -53,6 +53,11 @@
 						<label class="form-label mb-1" for="fees">Course Fees</label> 
 						<input id="fees" name="fees" type="number" placeholder="Enter Course Fees" class="form-control" min="10000" />
 					</div>
+					
+					<div class="mb-3">
+						<label class="form-label mb-1" for="description">Course description</label> 
+						<input id="description" name="description" type="text" placeholder="Enter Course Description" class="form-control" />
+					</div>
 
 					<div>
 						<button type="submit" class="btn btn-success">Save Course</button>

@@ -43,9 +43,10 @@ public class CourseController {
 			@RequestParam Level level,
 			@RequestParam int duration,
 			@RequestParam int fees,
+			@RequestParam String description,
 			RedirectAttributes redirect
 			) {
-		var course = new Course(name, duration, level, fees);
+		var course = new Course(name, duration, level, fees, description);
 		var id = courseService.create(course);
 		redirect.addFlashAttribute("result", new Result(Status.Success, "New Course Has Been Created!"));
 		return "redirect:course/%d".formatted(id);

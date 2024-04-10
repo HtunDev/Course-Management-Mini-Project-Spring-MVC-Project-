@@ -38,6 +38,7 @@
 						<th>Level</th>
 						<th>Duration</th>
 						<th>Fees</th>
+						<th>Description</th>
 					</tr>
 				</thead>
 
@@ -52,6 +53,7 @@
 							<td>${c.level}</td>
 							<td>${c.duration}</td>
 							<td>${c.fees}</td>
+							<td>${c.description}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
