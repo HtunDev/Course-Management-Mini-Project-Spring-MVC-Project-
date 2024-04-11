@@ -2,9 +2,10 @@ package com.HAH.mapping.model.service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Service;
 
@@ -14,50 +15,51 @@ import com.HAH.mapping.model.dto.Level;
 @Service
 public class CourseService {
 
-	private final SimpleJdbcInsert simpleJdbcInsert;
+    @Autowired
+    private SimpleJdbcInsert simpleJdbcInsert;
 
-	@Autowired
-	public CourseService(SimpleJdbcInsert simpleJdbcInsert) {
-		this.simpleJdbcInsert = simpleJdbcInsert;
-	}
+    private RowMapper<Course> rowMapper;
 
-	public int create(Course c) {
-		Map<String, Object> params = new HashMap<>();
-		params.put("name", c.getName());
-		params.put("level", c.getLevel().name());
-		params.put("duration", c.getDuration());
-		params.put("fees", c.getFees());
-		params.put("description", c.getDescription());
+//    public CourseService() {
+//        rowMapper = (rs, index) -> {
+//            var c = new Course();
+//            c.setId(rs.getInt("id"));
+//            c.setName(rs.getString("name"));
+//            c.setLevel(Level.valueOf(rs.getString("level")));
+//            c.setDuration(rs.getInt("duration"));
+//            c.setFees(rs.getInt("fees"));
+//            // If description column is added, set it here
+//            c.setDescription(rs.getString("description"));
+//            return c;
+//        };
+//    }
+    
+    public CourseService() {
+        rowMapper = new BeanPropertyRowMapper<>(Course.class);
+    }
 
-		return simpleJdbcInsert.executeAndReturnKeyHolder(params).getKey().intValue();
-	}
+    public int create(Course c) {
+        var params = new HashMap<String, Object>();
+        params.put("name", c.getName());
+        params.put("level", c.getLevel().name());
+        params.put("duration", c.getDuration());
+        params.put("fees", c.getFees());
+        // If description column is added, include it in params
+        params.put("description", c.getDescription());
 
-	public Course findById(int id) {
-		return simpleJdbcInsert.getJdbcTemplate().queryForObject("SELECT * FROM course WHERE id = ?", (rs, rowNum) -> {
-			Course course = new Course();
-			course.setId(rs.getInt("id"));
-			course.setName(rs.getString("name"));
-			course.setLevel(Level.valueOf(rs.getString("level")));
-			course.setDuration(rs.getInt("duration"));
-			course.setFees(rs.getInt("fees"));
-			course.setDescription(rs.getString("description"));
-			return course;
-		}, id);
-	}
+        return simpleJdbcInsert.executeAndReturnKeyHolder(params).getKey().intValue();
+    }
 
-	public List<Course> getAll() {
-		return simpleJdbcInsert.getJdbcTemplate().query("SELECT * FROM course", (rs, rowNum) -> {
-			Course course = new Course();
-			course.setId(rs.getInt("id"));
-			course.setName(rs.getString("name"));
-			course.setLevel(Level.valueOf(rs.getString("level")));
-			course.setDuration(rs.getInt("duration"));
-			course.setFees(rs.getInt("fees"));
-			course.setDescription(rs.getString("description"));
-			return course;
-		});
-	}
+    public Course findById(int id) {
+        return simpleJdbcInsert.getJdbcTemplate().query("select * from course where id = ?", rowMapper, id).stream()
+                .findAny().orElse(null);
+    }
+
+    public List<Course> getAll() {
+        return simpleJdbcInsert.getJdbcTemplate().query("select * from course", rowMapper);
+    }
 }
+
 
 //	This is manual
 //	private List<Course> coursesRepo;

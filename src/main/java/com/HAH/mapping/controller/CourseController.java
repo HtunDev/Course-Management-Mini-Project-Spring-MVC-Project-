@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,14 +40,9 @@ public class CourseController {
 	
 	@PostMapping
 	public String saveCourse(
-			@RequestParam String name,
-			@RequestParam Level level,
-			@RequestParam int duration,
-			@RequestParam int fees,
-			@RequestParam String description,
+			@ModelAttribute Course course,
 			RedirectAttributes redirect
 			) {
-		var course = new Course(name, duration, level, fees, description);
 		var id = courseService.create(course);
 		redirect.addFlashAttribute("result", new Result(Status.Success, "New Course Has Been Created!"));
 		return "redirect:course/%d".formatted(id);
