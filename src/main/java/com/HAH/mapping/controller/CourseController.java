@@ -54,6 +54,11 @@ public class CourseController {
 		model.put("course", courseService.findById(id));
 		return "course-details";
 	}
+	
+	@ModelAttribute
+	public void loadLevels(ModelMap model) {
+		model.put("levels", Level.values());
+	}
 
 
 //	This is modelAndView Return 
