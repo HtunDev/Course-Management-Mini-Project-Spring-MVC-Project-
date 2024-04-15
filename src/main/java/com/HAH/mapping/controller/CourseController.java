@@ -43,8 +43,12 @@ public class CourseController {
 			@ModelAttribute Course course,
 			RedirectAttributes redirect
 			) {
-		var id = courseService.create(course);
-		redirect.addFlashAttribute("result", new Result(Status.Success, "New Course Has Been Created!"));
+		var id = courseService.save(course);
+		
+		if(course.getId() != id) {
+			redirect.addFlashAttribute("result", new Result(Status.Success, "New Course Has Been Created!"));
+		}
+		
 		return "redirect:course/%d".formatted(id);
 	}
 	
@@ -58,6 +62,13 @@ public class CourseController {
 	@ModelAttribute
 	public void loadLevels(ModelMap model) {
 		model.put("levels", Level.values());
+	}
+	
+	@ModelAttribute
+	public void loadCourse(Integer id, ModelMap model) {
+		if(null != id) {
+			model.put("course", courseService.findById(id));
+		}
 	}
 
 

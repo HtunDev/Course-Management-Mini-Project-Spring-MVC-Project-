@@ -64,6 +64,15 @@
 						<label class="form-label mb-1" for="description">Course Description</label> 
 						<input id="description" name="description" type="text" value="${course.description}" disabled="disabled" readonly="readonly" class="form-control" />
 					</div>
+					
+					<div>
+					
+						<c:url value="/course/edit" var="editLink">
+							<c:param name="id" value="${course.id}"></c:param>
+						</c:url>
+						
+						<a href="${editLink}" class="btn btn-danger">Edit Course</a>
+					</div>
 
 				</form>
 

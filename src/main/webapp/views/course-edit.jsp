@@ -20,43 +20,57 @@
 
 	<div class="container pt-4">
 
-		<h1>Edit Course</h1>
+		<h1>${ empty course ? 'Add New' : 'Edit' } Course</h1>
 
 		<div class="row">
 
 			<div class="col-6">
 
 				<c:url value="/course" var="saveCourse"></c:url>
+				
 				<form method="post" action="${saveCourse}">
-
+					
+					<c:if test="${ not empty course }">
+						<input type="hidden" name="id" value="${course.id}" />
+					</c:if>
+				
 					<div class="mb-3">
 						<label class="form-label mb-1" for="name">Course Name</label> 
-						<input id="name" name="name" type="text" placeholder="Enter Course Name" class="form-control" />
+						<input id="name" name="name" value="${course.name}" type="text" placeholder="Enter Course Name" class="form-control" />
 					</div>
 
 					<div class="mb-3">
 						<label class="form-label mb-1" for="level">Level</label> 
 						<select name="level" id="level" class="form-select">
 							<option value="">Select One</option>
+							
 							<c:forEach var="item" items="${levels}">
-								<option value="${item}">${item}</option>
+								<c:choose>
+									<c:when test="${course.level eq item }">
+									<option selected="selected" value="${item}">${item}</option>
+								</c:when>
+								
+								<c:otherwise>
+									<option value="${item}">${item}</option>
+								</c:otherwise>
+								</c:choose>
 							</c:forEach>
 						</select>
 					</div>
 					
 					<div class="mb-3">
 						<label class="form-label mb-1" for="duration">Course Duration</label> 
-							<input id="duration" name="duration" type="number" placeholder="Enter Course Duration" class="form-control" min="1" />
+							<input id="duration" name="duration" value="${course.duration}" type="number" placeholder="Enter Course Duration" class="form-control" min="1" />
 					</div>
 					
 					<div class="mb-3">
 						<label class="form-label mb-1" for="fees">Course Fees</label> 
-						<input id="fees" name="fees" type="number" placeholder="Enter Course Fees" class="form-control" min="10000" />
+						<input id="fees" name="fees" value="${course.fees}" type="number" placeholder="Enter Course Fees" class="form-control" min="10000" />
 					</div>
 					
 					<div class="mb-3">
 						<label class="form-label mb-1" for="description">Course description</label> 
-						<input id="description" name="description" type="text" placeholder="Enter Course Description" class="form-control" />
+						<input id="description" name="description" value="${course.description}" type="text" placeholder="Enter Course Description" class="form-control" />
 					</div>
 
 					<div>

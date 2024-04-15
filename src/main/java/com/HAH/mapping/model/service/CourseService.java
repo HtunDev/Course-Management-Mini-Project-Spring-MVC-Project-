@@ -38,7 +38,16 @@ public class CourseService {
         rowMapper = new BeanPropertyRowMapper<>(Course.class);
     }
 
-    public int create(Course c) {
+    public int save(Course c) {
+    	
+    	if(c.getId() > 0) {
+    		simpleJdbcInsert.getJdbcTemplate().update("update course set name = ?, level = ?, duration = ?, fees = ?, description = ? where id = ? ", 
+    				c.getName(), c.getLevel().name(), c.getDuration(),
+    				c.getFees(), c.getDescription(), c.getId());
+    		
+    		return c.getId();
+    	}
+    
         var params = new HashMap<String, Object>();
         params.put("name", c.getName());
         params.put("level", c.getLevel().name());
